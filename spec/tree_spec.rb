@@ -14,8 +14,6 @@ describe Tree::Node do
     let(:new_child_node) { described_class.new(new_child_value) }
     let(:new_child_value) { parent_value }
 
-    its(:children) { should include new_child_node }
-
     context 'to a node with no children' do
       context 'when the child is less than the parent' do
         let(:new_child_value) { parent_value - 1 }

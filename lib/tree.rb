@@ -23,12 +23,6 @@ module Tree
       self
     end
 
-    def children
-      [self.left]
-    end
-
-    protected
-
     attr_writer :left, :right
   end
 
