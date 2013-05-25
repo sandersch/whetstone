@@ -40,19 +40,19 @@ module Tree
       let(:new_child_value) { parent_value }
 
       context 'to a node with no children' do
-        context 'when the child is less than the parent' do
+        context 'when the new child is less than the parent' do
           let(:new_child_value) { parent_value - 1 }
 
           its(:left) { should be new_child_node }
         end
 
-        context 'when the child is equal to the parent' do
+        context 'when the new child is equal to the parent' do
           let(:new_child_value) { parent_value }
 
           its(:left) { should be new_child_node }
         end
 
-        context 'when the child is greater than the parent' do
+        context 'when the new child is greater than the parent' do
           let(:new_child_value) { parent_value + 1 }
 
           its(:right) { should be new_child_node }
@@ -69,7 +69,7 @@ module Tree
         context 'on its left' do
           let(:existing_child_value) { parent_value - 1 }
 
-          context 'when the child is less than the parent' do
+          context 'when the new child is less than the parent' do
             let(:new_child_value) { parent_value - 1 }
 
             it 'tells the left child value to insert the value' do
@@ -79,7 +79,7 @@ module Tree
             end
           end
 
-          context 'when the child is greater than the parent' do
+          context 'when the new child is greater than the parent' do
             let(:new_child_value) { parent_value + 1 }
 
             its(:right) { should be new_child_node }
@@ -89,14 +89,14 @@ module Tree
         context 'on its right' do
           let(:existing_child_value) { parent_value + 1 }
 
-          context 'when the child is less than the parent' do
+          context 'when the new child is less than the parent' do
             let(:parent_value) { 5 }
             let(:new_child_value) { parent_value - 1 }
 
             its(:left) { should be new_child_node }
           end
 
-          context 'when the child is greater than the parent' do
+          context 'when the new child is greater than the parent' do
             let(:parent_value) { 5 }
             let(:new_child_value) { parent_value + 1 }
 
@@ -118,7 +118,7 @@ module Tree
           parent_node.insert existing_right_child
         end
 
-        context 'when the child is less than the parent' do
+        context 'when the new child is less than the parent' do
           let(:new_child_value) { parent_value - 1 }
 
           it 'tells the left child value to insert the value' do
@@ -128,10 +128,10 @@ module Tree
           end
         end
 
-        context 'when the child is greater than the parent' do
+        context 'when the new child is greater than the parent' do
           let(:new_child_value) { parent_value + 1 }
 
-          it 'tells the left child value to insert the value' do
+          it 'tells the right child value to insert the value' do
             existing_right_child.should_receive(:insert).with(new_child_node)
 
             subject
