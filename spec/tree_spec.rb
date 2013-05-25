@@ -1,40 +1,90 @@
 require 'tree'
 
 describe Tree::Node do
-  subject { node }
+  subject { parent_node }
 
-  let(:node) { described_class.new(value) }
-  let(:value) { mock :value }
+  let(:parent_node) { described_class.new(parent_value) }
+  let(:parent_value) { rand(2**16) }
 
-  its(:value) { should == value }
+  its(:value) { should == parent_value }
 
   describe "adding a child" do
-    subject { node.insert(child_node) }
+    subject { parent_node.insert(new_child_node) }
 
-    let(:child_node) { described_class.new(child_value) }
-    let(:child_value) { mock }
+    let(:new_child_node) { described_class.new(new_child_value) }
+    let(:new_child_value) { parent_value }
 
-    its(:children) { should include child_node }
+    its(:children) { should include new_child_node }
 
-    context 'that is smaller than the parent node' do
-      let(:value) { 5 }
-      let(:child_value) { value - 1 }
+    context 'to a node with no children' do
+      context 'when the child is less than the parent' do
+        let(:new_child_value) { parent_value - 1 }
 
-      its(:left) { should be child_node }
+        its(:left) { should be new_child_node }
+      end
+
+      context 'when the child is equal to the parent' do
+        let(:new_child_value) { parent_value }
+
+        its(:left) { should be new_child_node }
+      end
+
+      context 'when the child is greater than the parent' do
+        let(:new_child_value) { parent_value + 1 }
+
+        its(:right) { should be new_child_node }
+      end
     end
 
-    context 'that is equal to the parent node' do
-      let(:value) { 5 }
-      let(:child_value) { value }
+    context 'to a node with one existing child' do
+      let(:existing_child_node) { described_class.new existing_child_value }
 
-      its(:left) { should be child_node }
-    end
+      before do
+        parent_node.insert existing_child_node
+      end
 
-    context 'that is larger to the parent node' do
-      let(:value) { 5 }
-      let(:child_value) { value + 1 }
+      context 'on its left' do
+        let(:existing_child_value) { parent_value - 1 }
 
-      its(:right) { should be child_node }
+        context 'when the child is less than the parent' do
+          let(:new_child_value) { parent_value - 1 }
+
+          it 'tells the left child value to insert the value' do
+            existing_child_node.should_receive(:insert).with(new_child_node)
+
+            subject
+          end
+        end
+
+        context 'when the child is greater than the parent' do
+          let(:new_child_value) { parent_value + 1 }
+
+          its(:right) { should be new_child_node }
+        end
+      end
+
+      context 'on its right' do
+        let(:existing_child_value) { parent_value + 1 }
+
+        context 'when the child is less than the parent' do
+          let(:parent_value) { 5 }
+          let(:new_child_value) { parent_value - 1 }
+
+          its(:left) { should be new_child_node }
+        end
+
+        context 'when the child is greater than the parent' do
+          let(:parent_value) { 5 }
+          let(:new_child_value) { parent_value + 1 }
+
+          it 'tells the right child value to insert the value' do
+            existing_child_node.should_receive(:insert).with(new_child_node)
+
+            subject
+          end
+
+        end
+      end
     end
   end
 end

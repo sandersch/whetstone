@@ -7,8 +7,19 @@ module Tree
     attr_reader :value, :left, :right
 
     def insert(child)
-      self.left = child
-      self.right = child
+      if child.value <= self.value
+        if self.left
+          self.left.insert child
+        else
+          self.left = child
+        end
+      else
+        if self.right
+          self.right.insert child
+        else
+          self.right = child
+        end
+      end
       self
     end
 
