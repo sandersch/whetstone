@@ -82,7 +82,36 @@ describe Tree::Node do
 
             subject
           end
+        end
+      end
+    end
 
+    context 'to a node with two children' do
+      let(:existing_left_child) { described_class.new(parent_value - 1) }
+      let(:existing_right_child) { described_class.new(parent_value + 1) }
+
+      before do
+        parent_node.insert existing_left_child
+        parent_node.insert existing_right_child
+      end
+
+      context 'when the child is less than the parent' do
+        let(:new_child_value) { parent_value - 1 }
+
+        it 'tells the left child value to insert the value' do
+          existing_left_child.should_receive(:insert).with(new_child_node)
+
+          subject
+        end
+      end
+
+      context 'when the child is greater than the parent' do
+        let(:new_child_value) { parent_value + 1 }
+
+        it 'tells the left child value to insert the value' do
+          existing_right_child.should_receive(:insert).with(new_child_node)
+
+          subject
         end
       end
     end
