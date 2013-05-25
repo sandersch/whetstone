@@ -1,5 +1,7 @@
 module Tree
   class Node
+    include Comparable
+
     def initialize(value)
       @value = value
     end
@@ -7,7 +9,7 @@ module Tree
     attr_accessor :value, :left, :right
 
     def insert(child)
-      if child.value <= self.value
+      if self >= child
         self.upsert :left, child
       else
         self.upsert :right, child
@@ -21,6 +23,10 @@ module Tree
         self.send("#{side}=", new_child)
       end
       self
+    end
+
+    def <=>(other)
+      self.value <=> other.value
     end
   end
 end

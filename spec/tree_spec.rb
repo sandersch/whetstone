@@ -8,6 +8,30 @@ describe Tree::Node do
 
   its(:value) { should == parent_value }
 
+  describe "comparing two nodes" do
+    subject { parent_node <=> other_node }
+
+    let(:other_node) { described_class.new(other_value) }
+
+    context "when the other node's value is lesser" do
+      let(:other_value) { parent_value - 1 }
+
+      it { should == 1 }
+    end
+
+    context "when the other node's value is equal" do
+      let(:other_value) { parent_value  }
+
+      it { should == 0 }
+    end
+
+    context "when the other node's value is greater" do
+      let(:other_value) { parent_value + 1 }
+
+      it { should == -1 }
+    end
+  end
+
   describe "adding a child" do
     subject { parent_node.insert(new_child_node) }
 
