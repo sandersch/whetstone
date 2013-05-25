@@ -1,6 +1,6 @@
-require 'tree'
+require 'tree/node'
 
-module Tree
+class Tree
   describe Node do
     subject { parent_node }
 
