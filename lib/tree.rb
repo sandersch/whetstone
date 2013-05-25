@@ -4,26 +4,23 @@ module Tree
       @value = value
     end
 
-    attr_reader :value, :left, :right
+    attr_accessor :value, :left, :right
 
     def insert(child)
       if child.value <= self.value
-        if self.left
-          self.left.insert child
-        else
-          self.left = child
-        end
+        self.upsert :left, child
       else
-        if self.right
-          self.right.insert child
-        else
-          self.right = child
-        end
+        self.upsert :right, child
+      end
+    end
+
+    def upsert(side, new_child)
+      if existing_child = self.send(side)
+        existing_child.insert new_child
+      else
+        self.send("#{side}=", new_child)
       end
       self
     end
-
-    attr_writer :left, :right
   end
-
 end
