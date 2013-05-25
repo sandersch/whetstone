@@ -33,13 +33,16 @@ class Tree
       end
     end
 
-    describe "adding a child" do
-      subject { parent_node.insert(new_child_node) }
+    context "with no children" do
+      describe "adding a child" do
+        subject { parent_node.insert(new_child_node) }
 
-      let(:new_child_node) { described_class.new(new_child_value) }
-      let(:new_child_value) { parent_value }
+        let(:new_child_node) { described_class.new(new_child_value) }
 
-      context 'to a node with no children' do
+        subject { parent_node.insert(new_child_node) }
+
+        let(:new_child_node) { described_class.new(new_child_value) }
+
         context 'when the new child is less than the parent' do
           let(:new_child_value) { parent_value - 1 }
 
@@ -58,21 +61,27 @@ class Tree
           its(:right) { should be new_child_node }
         end
       end
+    end
 
-      context 'to a node with one existing child' do
-        let(:existing_child_node) { described_class.new existing_child_value }
+    context "with one child" do
+      let(:existing_child_node) { described_class.new existing_child_value }
 
-        before do
-          parent_node.insert existing_child_node
-        end
+      before do
+        parent_node.insert existing_child_node
+      end
 
-        context 'on its left' do
-          let(:existing_child_value) { parent_value - 1 }
+      context "on its left" do
+        let(:existing_child_value) { parent_value - 1 }
+
+        describe "adding a child" do
+          subject { parent_node.insert(new_child_node) }
+
+          let(:new_child_node) { described_class.new(new_child_value) }
 
           context 'when the new child is less than the parent' do
             let(:new_child_value) { parent_value - 1 }
 
-            it 'tells the left child value to insert the value' do
+            it 'tells the existing left child node to insert the new child node' do
               existing_child_node.should_receive(:insert).with(new_child_node)
 
               subject
@@ -85,22 +94,28 @@ class Tree
             its(:right) { should be new_child_node }
           end
         end
+      end
 
-        context 'on its right' do
-          let(:existing_child_value) { parent_value + 1 }
+      context "on its right" do
+        let(:existing_child_value) { parent_value + 1 }
 
-          context 'when the new child is less than the parent' do
+        describe "adding a child" do
+          subject { parent_node.insert(new_child_node) }
+
+          let(:new_child_node) { described_class.new(new_child_value) }
+
+          context 'that is less than the parent' do
             let(:parent_value) { 5 }
             let(:new_child_value) { parent_value - 1 }
 
             its(:left) { should be new_child_node }
           end
 
-          context 'when the new child is greater than the parent' do
+          context 'that is greater than the parent' do
             let(:parent_value) { 5 }
             let(:new_child_value) { parent_value + 1 }
 
-            it 'tells the right child value to insert the value' do
+            it 'tells the existing right child node to insert the new child node' do
               existing_child_node.should_receive(:insert).with(new_child_node)
 
               subject
@@ -108,20 +123,26 @@ class Tree
           end
         end
       end
+    end
 
-      context 'to a node with two children' do
-        let(:existing_left_child) { described_class.new(parent_value - 1) }
-        let(:existing_right_child) { described_class.new(parent_value + 1) }
+    context "with two children" do
+      let(:existing_left_child) { described_class.new(parent_value - 1) }
+      let(:existing_right_child) { described_class.new(parent_value + 1) }
 
-        before do
-          parent_node.insert existing_left_child
-          parent_node.insert existing_right_child
-        end
+      before do
+        parent_node.insert existing_left_child
+        parent_node.insert existing_right_child
+      end
+
+      describe "adding a child" do
+        subject { parent_node.insert(new_child_node) }
+
+        let(:new_child_node) { described_class.new(new_child_value) }
 
         context 'when the new child is less than the parent' do
           let(:new_child_value) { parent_value - 1 }
 
-          it 'tells the left child value to insert the value' do
+          it 'tells the existing left child node to insert the new child node' do
             existing_left_child.should_receive(:insert).with(new_child_node)
 
             subject
@@ -131,7 +152,7 @@ class Tree
         context 'when the new child is greater than the parent' do
           let(:new_child_value) { parent_value + 1 }
 
-          it 'tells the right child value to insert the value' do
+          it 'tells the existing right child node to insert the new child node' do
             existing_right_child.should_receive(:insert).with(new_child_node)
 
             subject
