@@ -1,24 +1,32 @@
 module Tree
+  class << ( EmptyNode = Class.new )
+    def insert_or_initialize(child, parent)
+      if child.value <= parent.value
+        parent.left = child
+      else
+        parent.right = child
+      end
+    end
+  end
+
   class Node
     def initialize(value)
       @value = value
+      @left = EmptyNode
+      @right = EmptyNode
     end
 
     attr_reader :value, :left, :right
 
+    def insert_or_initialize(child, parent)
+      self.insert(child)
+    end
+
     def insert(child)
       if child.value <= self.value
-        if self.left
-          self.left.insert child
-        else
-          self.left = child
-        end
+        self.left.insert_or_initialize child, self
       else
-        if self.right
-          self.right.insert child
-        else
-          self.right = child
-        end
+        self.right.insert_or_initialize child, self
       end
       self
     end
