@@ -4,6 +4,16 @@ module Tree
       @value = value
     end
 
-    attr_reader :value
+    attr_reader :value, :children
+
+    def insert(child)
+      self.children = [child]
+      self
+    end
+
+    protected
+
+    attr_writer :children
   end
+
 end
