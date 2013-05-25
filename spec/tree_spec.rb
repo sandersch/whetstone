@@ -29,5 +29,12 @@ describe Tree::Node do
 
       its(:left) { should be child_node }
     end
+
+    context 'that is larger to the parent node' do
+      let(:value) { 5 }
+      let(:child_value) { value + 1 }
+
+      its(:right) { should be child_node }
+    end
   end
 end

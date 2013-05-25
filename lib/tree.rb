@@ -4,10 +4,11 @@ module Tree
       @value = value
     end
 
-    attr_reader :value, :left
+    attr_reader :value, :left, :right
 
     def insert(child)
       self.left = child
+      self.right = child
       self
     end
 
@@ -17,7 +18,7 @@ module Tree
 
     protected
 
-    attr_writer :left
+    attr_writer :left, :right
   end
 
 end
