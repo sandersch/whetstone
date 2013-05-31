@@ -1,9 +1,22 @@
 class Tree
+  class << ( EmptyNode = Object.new )
+    def upsert(parent, side, new_child)
+      parent.send("#{side}=", new_child)
+      parent
+    end
+
+    def contains?(*)
+      false
+    end
+  end
+
   class Node
     include Comparable
 
     def initialize(value)
       @value = value
+      @left = EmptyNode
+      @right = EmptyNode
     end
 
     attr_accessor :value, :left, :right
@@ -11,28 +24,23 @@ class Tree
     def contains?(value)
       if self.value == value
         true
-      elsif self.value >= value
-        self.left.contains? value if self.left
+      elsif self.value > value
+        self.left.contains? value
       else
-        self.right.contains? value if self.right
+        self.right.contains? value
       end
     end
 
-    def insert(child)
+    def insert(child, side=nil)
       if self >= child
-        self.upsert :left, child
+        self.left.upsert self, :left, child
       else
-        self.upsert :right, child
+        self.right.upsert self, :right, child
       end
     end
 
-    def upsert(side, new_child)
-      if existing_child = self.send(side)
-        existing_child.insert new_child
-      else
-        self.send("#{side}=", new_child)
-      end
-      self
+    def upsert(parent, side, new_child)
+      self.insert new_child
     end
 
     def <=>(other)
