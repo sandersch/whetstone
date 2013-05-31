@@ -8,6 +8,16 @@ class Tree
 
     attr_accessor :value, :left, :right
 
+    def contains?(value)
+      if self.value == value
+        true
+      elsif self.value >= value
+        self.left.contains? value if self.left
+      else
+        self.right.contains? value if self.right
+      end
+    end
+
     def insert(child)
       if self >= child
         self.upsert :left, child

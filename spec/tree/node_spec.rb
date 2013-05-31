@@ -34,6 +34,22 @@ class Tree
     end
 
     context "with no children" do
+      describe "checking if the node contains" do
+        subject { parent_node.contains? value }
+
+        context 'its value' do
+          let(:value) { parent_value }
+
+          it { should be_true }
+        end
+
+        context 'another value' do
+          let(:value) { parent_value + 100 }
+
+          it { should be_false }
+        end
+      end
+
       describe "adding a child" do
         subject { parent_node.insert(new_child_node) }
 
@@ -73,6 +89,32 @@ class Tree
       context "on its left" do
         let(:existing_child_value) { parent_value - 1 }
 
+        describe "checking if the node contains" do
+          subject { parent_node.contains? value }
+
+          context 'its value' do
+            let(:value) { parent_value }
+
+            it { should be_true }
+          end
+
+          context 'a value less than itself' do
+            let(:value) { parent_value - 100 }
+
+            it 'asks the existing left child if it contains the value' do
+              existing_child_node.should_receive(:contains?).with(value)
+
+              subject
+            end
+          end
+
+          context 'a value greater than itself' do
+            let(:value) { parent_value + 100 }
+
+            it { should be_false }
+          end
+        end
+
         describe "adding a child" do
           subject { parent_node.insert(new_child_node) }
 
@@ -98,6 +140,32 @@ class Tree
 
       context "on its right" do
         let(:existing_child_value) { parent_value + 1 }
+
+        describe "checking if the node contains" do
+          subject { parent_node.contains? value }
+
+          context 'its value' do
+            let(:value) { parent_value }
+
+            it { should be_true }
+          end
+
+          context 'a value less than itself' do
+            let(:value) { parent_value - 100 }
+
+            it { should be_false }
+          end
+
+          context 'a value greater than itself' do
+            let(:value) { parent_value + 100 }
+
+            it 'asks the existing right child if it contains the value' do
+              existing_child_node.should_receive(:contains?).with(value)
+
+              subject
+            end
+          end
+        end
 
         describe "adding a child" do
           subject { parent_node.insert(new_child_node) }
@@ -132,6 +200,36 @@ class Tree
       before do
         parent_node.insert existing_left_child
         parent_node.insert existing_right_child
+      end
+
+      describe "checking if the node contains" do
+        subject { parent_node.contains? value }
+
+        context 'its value' do
+          let(:value) { parent_value }
+
+          it { should be_true }
+        end
+
+        context 'a value less than itself' do
+          let(:value) { parent_value - 100 }
+
+          it 'asks the existing left child if it contains the value' do
+            existing_left_child.should_receive(:contains?).with(value)
+
+            subject
+          end
+        end
+
+        context 'a value greater than itself' do
+          let(:value) { parent_value + 100 }
+
+          it 'asks the existing right child if it contains the value' do
+            existing_right_child.should_receive(:contains?).with(value)
+
+            subject
+          end
+        end
       end
 
       describe "adding a child" do
