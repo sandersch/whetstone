@@ -3,6 +3,10 @@ class List
     elements << value if value 
   end
 
+  def contains?(value)
+    elements.include? value
+  end
+
   def size
     elements.size
   end
