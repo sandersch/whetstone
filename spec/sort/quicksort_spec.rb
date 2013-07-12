@@ -34,5 +34,11 @@ describe Quicksort do
         should == 2
       end
     end
+
+    describe "sorting" do
+      subject { described_class.sort! input }
+
+      it_behaves_like "a correct sorting algorithm"
+    end
   end
 end

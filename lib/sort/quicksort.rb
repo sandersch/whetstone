@@ -7,6 +7,29 @@ module Quicksort
     self.sort(less) + [pivot] + self.sort(greater)
   end
 
+  def self.sort!(input)
+    self.in_place_sort(input)
+  end
+
+  def self.in_place_sort(array, left=0, right=array.length-1)
+    # don't do anything if we don't have at least one element
+    if left < right
+
+      # randomly select a pivot
+      pivot_index = rand(left..right)
+
+      # partition the array in place by the pivot
+      # returns the resulting index of the pivot value
+      post_sort_pivot_index = partition(array, left, right, pivot_index)
+
+      # sort elements less than the pivot
+      self.in_place_sort(array, left, post_sort_pivot_index - 1)
+
+      # sort elements greater than the pivot
+      self.in_place_sort(array, post_sort_pivot_index + 1, right)
+    end
+  end
+
   def self.partition(array, left, right, pivot_index)
     pivot = array[pivot_index]
 
