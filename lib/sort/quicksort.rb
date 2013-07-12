@@ -20,13 +20,13 @@ module Quicksort
 
       # partition the array in place by the pivot
       # returns the resulting index of the pivot value
-      post_sort_pivot_index = partition(array, left, right, pivot_index)
+      pivot_index = partition(array, left, right, pivot_index)
 
       # sort elements less than the pivot
-      self.in_place_sort(array, left, post_sort_pivot_index - 1)
+      self.in_place_sort(array, left, pivot_index - 1)
 
       # sort elements greater than the pivot
-      self.in_place_sort(array, post_sort_pivot_index + 1, right)
+      self.in_place_sort(array, pivot_index + 1, right)
     end
   end
 
