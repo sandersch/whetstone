@@ -29,6 +29,10 @@ describe Quicksort do
       it 'partitions correctly' do
         array.should == [2, 3, 8, 6, 5]
       end
+
+      it 'returns the resulting partition index' do
+        should == 2
+      end
     end
   end
 end
