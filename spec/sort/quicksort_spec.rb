@@ -14,4 +14,21 @@ describe Quicksort do
   let(:output) { described_class.sort input }
 
   it_behaves_like "a correct sorting algorithm"
+
+  describe "in place" do
+    before { subject }
+
+    describe "partitioning" do
+      subject { described_class.partition(array, left, right, pivot_index) }
+
+      let(:array) { [6, 2, 8, 3, 5] }
+      let(:left) { 0 }
+      let(:right) { 4 }
+      let(:pivot_index) { 3 }
+
+      it 'partitions correctly' do
+        array.should == [2, 3, 8, 6, 5]
+      end
+    end
+  end
 end
