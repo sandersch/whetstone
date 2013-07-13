@@ -42,10 +42,10 @@ module Quicksort
 
     # walk through the array starting from the element right after the pivot
     # to the last element in our range
-    (partition_boundary..right).each do |j|
-      if array[j] < pivot
+    (partition_boundary..right).each do |index|
+      if array[index] < pivot
         # move this element to the less than pivot section of the array
-        array[j], array[partition_boundary] = array[partition_boundary], array[j]
+        array[index], array[partition_boundary] = array[partition_boundary], array[index]
         partition_boundary += 1
       end
     end
