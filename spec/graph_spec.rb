@@ -13,6 +13,7 @@ describe Graph do
 
   context "a simple graph" do
     let(:input) { [[1], [0,2], [1]] }
+    let(:vertex) { 1 }
 
     its(:size) { should == input.size }
 
@@ -37,9 +38,14 @@ describe Graph do
     describe "getting the neighbors of a vertex" do
       subject { graph.neighbors_of vertex }
 
-      let(:vertex) { 1 }
 
-      it { should == input[1] }
+      it { should == input[vertex] }
+    end
+
+    describe "a breadth-first search" do
+      subject { graph.bfs vertex }
+
+      it { should == [1, 0, 1] }
     end
   end
 
@@ -77,6 +83,18 @@ describe Graph do
         let(:there_vertex) { 4 }
 
         it { should be_false }
+      end
+
+      describe "a breadth-first search" do
+        subject { graph.bfs vertex }
+        let(:vertex) { 0 }
+
+        it { should == [
+          0, 1, 2,
+          1, 2, 3,
+          2, 4, 4,
+          3, 4, 5,
+        ] }
       end
     end
   end
