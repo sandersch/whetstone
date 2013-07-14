@@ -38,14 +38,19 @@ describe Graph do
     describe "getting the neighbors of a vertex" do
       subject { graph.neighbors_of vertex }
 
-
       it { should == input[vertex] }
     end
 
-    describe "a breadth-first search" do
-      subject { graph.bfs vertex }
+    describe "finding the distance from one vertex to all other connected vertices" do
+      subject { graph.distances_from vertex }
 
       it { should == [1, 0, 1] }
+    end
+
+    describe "a breadth-first search" do
+      it 'calls the passed block with the correct arguments when an unexplored node is found' do
+        expect { |b| graph.bfs vertex, &b }.to yield_successive_args([1, 0], [1, 2])
+      end
     end
   end
 
@@ -65,6 +70,7 @@ describe Graph do
       [7,8,10]     # 11
     ]
     end
+    let(:vertex) { 0 }
 
     its(:size) { should == input.size }
 
@@ -84,17 +90,34 @@ describe Graph do
 
         it { should be_false }
       end
+    end
 
-      describe "a breadth-first search" do
-        subject { graph.bfs vertex }
-        let(:vertex) { 0 }
+    describe "finding the distance from one vertex to all other connected vertices" do
+      subject { graph.distances_from vertex }
 
-        it { should == [
-          0, 1, 2,
-          1, 2, 3,
-          2, 4, 4,
-          3, 4, 5,
-        ] }
+      it { should == [
+        0, 1, 2,
+        1, 2, 3,
+        2, 4, 4,
+        3, 4, 5,
+      ] }
+    end
+
+    describe "a breadth-first search" do
+      it 'calls the passed block with the correct arguments when an unexplored node is found' do
+        expect { |b| graph.bfs vertex, &b }.to yield_successive_args(
+          [0, 1],
+          [0, 3],
+          [1, 4],
+          [1, 2],
+          [3, 6],
+          [2, 5],
+          [6, 9],
+          [5, 8],
+          [9, 7],
+          [9, 10],
+          [8, 11]
+        )
       end
     end
   end

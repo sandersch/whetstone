@@ -15,27 +15,31 @@ class Graph
     input[vertex]
   end
 
-  def bfs(starting_vertex)
+  def distances_from(starting_vertex)
     distance_to = []
     distance_to[starting_vertex] = 0
-    queue = [starting_vertex]
 
-    while vertex = queue.shift
-      puts "exploring vertex = #{vertex}"
-
-      neighbors_of(vertex).each do |neighbor|
-        puts "neighbor = #{neighbor}"
-
-        if !distance_to[neighbor]
-          puts "neighbor #{neighbor} is unexplored!"
-
-          distance_to[neighbor] = distance_to[vertex] + 1
-          queue << neighbor
-        end
-      end
+    self.bfs starting_vertex do |vertex, neighbor|
+      distance_to[neighbor] = distance_to[vertex] + 1
     end
 
     distance_to
+  end
+
+  def bfs(starting_vertex, &block)
+    explored = [starting_vertex]
+    queue = [starting_vertex]
+
+    while vertex = queue.shift
+      neighbors_of(vertex).each do |neighbor|
+        if !explored.include? neighbor
+          explored << neighbor
+          queue << neighbor
+
+          yield vertex, neighbor if block_given?
+        end
+      end
+    end
   end
 
   protected
