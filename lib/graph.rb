@@ -11,6 +11,10 @@ class Graph
     input[here].include? there
   end
 
+  def neighbors_of(vertex)
+    input[vertex]
+  end
+
   protected
 
   attr_reader :input
