@@ -33,7 +33,14 @@ describe WordTree do
         let(:word) { "bogus" }
 
         it { should be_false }
+
+        pending "that is a PARTIAL match of a word that is in the tree" do
+          let(:word) { "appl" }
+
+          it { should be_false }
+        end
       end
+
     end
 
   end
