@@ -1,4 +1,4 @@
-# Balanced Binary Search Trees: Operations
+# Balanced Binary Search Trees: Motivation
 
 ## Sorted Arrays: Supported Operations
 
@@ -15,7 +15,7 @@ But what about insertions and deletions? Would take `O(n)` time
 
 ## Balanced Search Trees: Supported Operations
 
-### Raison d'etre
+### Motivation
 
 Like sorted array + fast (logarithmic) inserts and deletes!
 
