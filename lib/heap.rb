@@ -18,7 +18,6 @@ class Heap
   end
 
   def satisfies_heap_property_at?(idx)
-    puts "nodes = #{self.nodes.inspect}"
     self.class.children_of(idx).each do |child|
       @nodes[child] && (@nodes[idx] < @nodes[child] or return false)
     end
