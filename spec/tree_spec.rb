@@ -6,7 +6,7 @@ describe Tree do
      subject.store value
     end
 
-    let(:value) { mock }
+    let(:value) { double }
 
     it 'contains the stored value' do
       subject.contains?(value).should be_true

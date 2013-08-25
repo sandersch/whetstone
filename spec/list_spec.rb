@@ -11,7 +11,7 @@ describe List do
     describe "adding an entry" do
       subject { list.add new_value }
 
-      let(:new_value) { mock }
+      let(:new_value) { double }
 
       its(:size) { should == 1 }
     end
@@ -19,7 +19,7 @@ describe List do
     describe "checking if the list contains a value" do
       subject { list.contains? other_value }
 
-      let(:other_value) { mock }
+      let(:other_value) { double }
 
       it { should be_false }
     end
@@ -27,14 +27,14 @@ describe List do
 
   context "with one entry" do
     let(:list) { described_class.new existing_value }
-    let(:existing_value) { mock }
+    let(:existing_value) { double }
 
     its(:size) { should == 1 }
 
     describe "adding an entry" do
       subject { list.add new_value }
 
-      let(:new_value) { mock }
+      let(:new_value) { double }
 
       its(:size) { should == 2 }
     end
@@ -49,7 +49,7 @@ describe List do
       end
 
       context "when the value is not stored in the list" do
-        let(:other_value) { mock }
+        let(:other_value) { double }
 
         it { should be_false }
       end
@@ -57,7 +57,7 @@ describe List do
   end
 
   context "with many entries" do
-    before { number_of_existing_entries.times { list.add mock } }
+    before { number_of_existing_entries.times { list.add double } }
 
     let(:number_of_existing_entries) { 5 }
 
