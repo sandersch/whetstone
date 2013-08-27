@@ -27,17 +27,17 @@ describe Heap, 'a minimum heap' do
     end
   end
 
-  pending "with many elements" do
+  describe "with many elements" do
     before do
       elements.each do |elem|
         heap.insert elem
       end
     end
 
-    let(:elements) { [5, 2, 3, 1, 4] }
+    let(:elements) { [5, 2, 3, 1, 4].shuffle }
 
     its(:size) { should == 5 }
-    its(:extract_min) { pending; should == 1 }
+    its(:extract_min) { should == 1 }
   end
 
   describe "testing that the heap property holds" do

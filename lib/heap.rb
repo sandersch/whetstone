@@ -10,7 +10,25 @@ class Heap
   end
 
   def insert(elem)
-    @nodes << elem
+    idx = @nodes.size
+    @nodes[idx] = elem
+    bubble_up_from idx
+  end
+
+  def bubble_up_from(idx)
+    while parent_idx = self.class.parent_of(idx)
+      if satisfies_heap_property_at? parent_idx
+        return idx
+      else
+        swap idx, parent_idx
+        idx = parent_idx
+      end
+    end
+    idx
+  end
+
+  def swap(idx1, idx2)
+    @nodes[idx1], @nodes[idx2] = @nodes[idx2], @nodes[idx1]
   end
 
   def extract_min
