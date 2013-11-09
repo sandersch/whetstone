@@ -7,7 +7,10 @@ class Tree
     let(:parent_node) { described_class.new(parent_value) }
     let(:parent_value) { rand(2**16) }
 
-    its(:value) { should == parent_value }
+    describe '#value' do
+      subject { super().value }
+      it { should == parent_value }
+    end
 
     describe "comparing two nodes" do
       subject { parent_node <=> other_node }
@@ -40,13 +43,13 @@ class Tree
         context 'its value' do
           let(:value) { parent_value }
 
-          it { should be_true }
+          it { should be_truthy }
         end
 
         context 'another value' do
           let(:value) { parent_value + 100 }
 
-          it { should be_false }
+          it { should be_falsey }
         end
       end
 
@@ -62,19 +65,28 @@ class Tree
         context 'when the new child is less than the parent' do
           let(:new_child_value) { parent_value - 1 }
 
-          its(:left) { should be new_child_node }
+          describe '#left' do
+            subject { super().left }
+            it { should be new_child_node }
+          end
         end
 
         context 'when the new child is equal to the parent' do
           let(:new_child_value) { parent_value }
 
-          its(:left) { should be new_child_node }
+          describe '#left' do
+            subject { super().left }
+            it { should be new_child_node }
+          end
         end
 
         context 'when the new child is greater than the parent' do
           let(:new_child_value) { parent_value + 1 }
 
-          its(:right) { should be new_child_node }
+          describe '#right' do
+            subject { super().right }
+            it { should be new_child_node }
+          end
         end
       end
     end
@@ -95,14 +107,14 @@ class Tree
           context 'its value' do
             let(:value) { parent_value }
 
-            it { should be_true }
+            it { should be_truthy }
           end
 
           context 'a value less than itself' do
             let(:value) { parent_value - 100 }
 
             it 'asks the existing left child if it contains the value' do
-              existing_child_node.should_receive(:contains?).with(value)
+              expect(existing_child_node).to receive(:contains?).with(value)
 
               subject
             end
@@ -111,7 +123,7 @@ class Tree
           context 'a value greater than itself' do
             let(:value) { parent_value + 100 }
 
-            it { should be_false }
+            it { should be_falsey }
           end
         end
 
@@ -124,7 +136,7 @@ class Tree
             let(:new_child_value) { parent_value - 1 }
 
             it 'tells the existing left child node to insert the new child node' do
-              existing_child_node.should_receive(:insert).with(new_child_node)
+              expect(existing_child_node).to receive(:insert).with(new_child_node)
 
               subject
             end
@@ -133,7 +145,10 @@ class Tree
           context 'when the new child is greater than the parent' do
             let(:new_child_value) { parent_value + 1 }
 
-            its(:right) { should be new_child_node }
+            describe '#right' do
+              subject { super().right }
+              it { should be new_child_node }
+            end
           end
         end
       end
@@ -147,20 +162,20 @@ class Tree
           context 'its value' do
             let(:value) { parent_value }
 
-            it { should be_true }
+            it { should be_truthy }
           end
 
           context 'a value less than itself' do
             let(:value) { parent_value - 100 }
 
-            it { should be_false }
+            it { should be_falsey }
           end
 
           context 'a value greater than itself' do
             let(:value) { parent_value + 100 }
 
             it 'asks the existing right child if it contains the value' do
-              existing_child_node.should_receive(:contains?).with(value)
+              expect(existing_child_node).to receive(:contains?).with(value)
 
               subject
             end
@@ -176,7 +191,10 @@ class Tree
             let(:parent_value) { 5 }
             let(:new_child_value) { parent_value - 1 }
 
-            its(:left) { should be new_child_node }
+            describe '#left' do
+              subject { super().left }
+              it { should be new_child_node }
+            end
           end
 
           context 'that is greater than the parent' do
@@ -184,7 +202,7 @@ class Tree
             let(:new_child_value) { parent_value + 1 }
 
             it 'tells the existing right child node to insert the new child node' do
-              existing_child_node.should_receive(:insert).with(new_child_node)
+              expect(existing_child_node).to receive(:insert).with(new_child_node)
 
               subject
             end
@@ -208,14 +226,14 @@ class Tree
         context 'its value' do
           let(:value) { parent_value }
 
-          it { should be_true }
+          it { should be_truthy }
         end
 
         context 'a value less than itself' do
           let(:value) { parent_value - 100 }
 
           it 'asks the existing left child if it contains the value' do
-            existing_left_child.should_receive(:contains?).with(value)
+            expect(existing_left_child).to receive(:contains?).with(value)
 
             subject
           end
@@ -225,7 +243,7 @@ class Tree
           let(:value) { parent_value + 100 }
 
           it 'asks the existing right child if it contains the value' do
-            existing_right_child.should_receive(:contains?).with(value)
+            expect(existing_right_child).to receive(:contains?).with(value)
 
             subject
           end
@@ -241,7 +259,7 @@ class Tree
           let(:new_child_value) { parent_value - 1 }
 
           it 'tells the existing left child node to insert the new child node' do
-            existing_left_child.should_receive(:insert).with(new_child_node)
+            expect(existing_left_child).to receive(:insert).with(new_child_node)
 
             subject
           end
@@ -251,7 +269,7 @@ class Tree
           let(:new_child_value) { parent_value + 1 }
 
           it 'tells the existing right child node to insert the new child node' do
-            existing_right_child.should_receive(:insert).with(new_child_node)
+            expect(existing_right_child).to receive(:insert).with(new_child_node)
 
             subject
           end

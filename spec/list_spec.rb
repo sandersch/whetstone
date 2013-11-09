@@ -6,14 +6,20 @@ describe List do
   let(:list) { described_class.new }
 
   context "with no entries" do
-    its(:size) { should == 0 }
+    describe '#size' do
+      subject { super().size }
+      it { should == 0 }
+    end
 
     describe "adding an entry" do
       subject { list.add new_value }
 
       let(:new_value) { double }
 
-      its(:size) { should == 1 }
+      describe '#size' do
+        subject { super().size }
+        it { should == 1 }
+      end
     end
 
     describe "checking if the list contains a value" do
@@ -21,7 +27,7 @@ describe List do
 
       let(:other_value) { double }
 
-      it { should be_false }
+      it { should be_falsey }
     end
   end
 
@@ -29,14 +35,20 @@ describe List do
     let(:list) { described_class.new existing_value }
     let(:existing_value) { double }
 
-    its(:size) { should == 1 }
+    describe '#size' do
+      subject { super().size }
+      it { should == 1 }
+    end
 
     describe "adding an entry" do
       subject { list.add new_value }
 
       let(:new_value) { double }
 
-      its(:size) { should == 2 }
+      describe '#size' do
+        subject { super().size }
+        it { should == 2 }
+      end
     end
 
     describe "checking if the list contains a value" do
@@ -45,13 +57,13 @@ describe List do
       context "when the value is stored in the list" do
         let(:other_value) { existing_value }
 
-        it { should be_true }
+        it { should be_truthy }
       end
 
       context "when the value is not stored in the list" do
         let(:other_value) { double }
 
-        it { should be_false }
+        it { should be_falsey }
       end
     end
   end
@@ -61,6 +73,9 @@ describe List do
 
     let(:number_of_existing_entries) { 5 }
 
-    its(:size) { should == number_of_existing_entries }
+    describe '#size' do
+      subject { super().size }
+      it { should == number_of_existing_entries }
+    end
   end
 end

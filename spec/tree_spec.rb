@@ -9,7 +9,7 @@ describe Tree do
     let(:value) { double }
 
     it 'contains the stored value' do
-      subject.contains?(value).should be_true
+      expect(subject.contains?(value)).to be_truthy
     end
   end
 end

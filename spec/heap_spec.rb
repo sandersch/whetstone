@@ -6,7 +6,10 @@ describe Heap, 'a minimum heap' do
   let(:heap) { Heap.new }
 
   context "with no elements" do
-    its(:size) { should == 0 }
+    describe '#size' do
+      subject { super().size }
+      it { should == 0 }
+    end
   end
 
   context "with one element" do
@@ -16,14 +19,21 @@ describe Heap, 'a minimum heap' do
 
     let(:element) { 1 }
 
-    its(:size) { should == 1 }
-    its(:extract_min) { should be element }
+    describe '#size' do
+      subject { super().size }
+      it { should == 1 }
+    end
+
+    describe '#extract_min' do
+      subject { super().extract_min }
+      it { should be element }
+    end
 
     describe "testing that the heap property holds" do
       subject { heap.satisfies_heap_property_at? index }
       let(:index) { 0 }
 
-      it { should be_true }
+      it { should be_truthy }
     end
   end
 
@@ -36,8 +46,15 @@ describe Heap, 'a minimum heap' do
 
     let(:elements) { [5, 2, 3, 1, 4].shuffle }
 
-    its(:size) { should == 5 }
-    its(:extract_min) { should == 1 }
+    describe '#size' do
+      subject { super().size }
+      it { should == 5 }
+    end
+
+    describe '#extract_min' do
+      subject { super().extract_min }
+      it { should == 1 }
+    end
   end
 
   describe "testing that the heap property holds" do
@@ -46,7 +63,7 @@ describe Heap, 'a minimum heap' do
     context "at a leaf node" do
       let(:index) { 0 }
 
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context "at a node with one child" do
@@ -57,7 +74,7 @@ describe Heap, 'a minimum heap' do
           heap.instance_eval { @nodes = [0, 1, 2, 3] }
         end
 
-        it { should be_true }
+        it { should be_truthy }
       end
 
       context "that is less than the node" do
@@ -65,7 +82,7 @@ describe Heap, 'a minimum heap' do
           heap.instance_eval { @nodes = [0, 3, 2, 1] }
         end
 
-        it { should be_false }
+        it { should be_falsey }
       end
     end
 

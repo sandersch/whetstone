@@ -8,14 +8,20 @@ describe Graph do
   context "an empty graph" do
     let(:input) { [] }
 
-    its(:size) { should == 0 }
+    describe '#size' do
+      subject { super().size }
+      it { should == 0 }
+    end
   end
 
   context "a simple graph" do
     let(:input) { [[1], [0,2], [1]] }
     let(:vertex) { 1 }
 
-    its(:size) { should == input.size }
+    describe '#size' do
+      subject { super().size }
+      it { should == input.size }
+    end
 
     describe "checking if two vertices are connected" do
       subject { graph.connected?(here_vertex, there_vertex) }
@@ -24,14 +30,14 @@ describe Graph do
         let(:here_vertex) { 0 }
         let(:there_vertex) { 1 }
 
-        it { should be_true }
+        it { should be_truthy }
       end
 
       describe 'knows that v2 is not connected to v0' do
         let(:here_vertex) { 2 }
         let(:there_vertex) { 0 }
 
-        it { should be_false }
+        it { should be_falsey }
       end
     end
 
@@ -72,7 +78,10 @@ describe Graph do
     end
     let(:vertex) { 0 }
 
-    its(:size) { should == input.size }
+    describe '#size' do
+      subject { super().size }
+      it { should == input.size }
+    end
 
     describe "checking if two vertices are connected" do
       subject { graph.connected?(here_vertex, there_vertex) }
@@ -81,14 +90,14 @@ describe Graph do
         let(:here_vertex) { 0 }
         let(:there_vertex) { 1 }
 
-        it { should be_true }
+        it { should be_truthy }
       end
 
       describe 'knows that v2 is not connected to v4' do
         let(:here_vertex) { 2 }
         let(:there_vertex) { 4 }
 
-        it { should be_false }
+        it { should be_falsey }
       end
     end
 

@@ -9,7 +9,7 @@ describe WordTree do
 
       let(:word) { "apple" }
 
-      it { should be_false }
+      it { should be_falsey }
     end
   end
 
@@ -26,18 +26,18 @@ describe WordTree do
       context "a word in the tree" do
         let(:word) { "apple" }
 
-        it { should be_true }
+        it { should be_truthy }
       end
 
       context "a word NOT in the tree" do
         let(:word) { "bogus" }
 
-        it { should be_false }
+        it { should be_falsey }
 
         pending "that is a PARTIAL match of a word that is in the tree" do
           let(:word) { "appl" }
 
-          it { should be_false }
+          it { should be_falsey }
         end
       end
 

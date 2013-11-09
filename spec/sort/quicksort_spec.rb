@@ -5,7 +5,7 @@ shared_examples "a correct sorting algorithm" do
     let(:input) { Array.new(1_000) { rand 1_000_000_000 } }
 
     it 'sorts correctly' do
-      output.should == input.sort
+      expect(output).to eq(input.sort)
     end
   end
 end
@@ -27,7 +27,7 @@ describe Quicksort do
       let(:pivot_index) { 3 }
 
       it 'partitions correctly' do
-        array.should == [2, 3, 8, 6, 5]
+        expect(array).to eq([2, 3, 8, 6, 5])
       end
 
       it 'returns the resulting partition index' do
